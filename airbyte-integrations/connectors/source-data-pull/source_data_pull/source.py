@@ -111,7 +111,7 @@ class Customers(DataPullStream):
 
 
 # Basic incremental stream
-class IncrementalDataPullStream(DataPullStream, ABC):
+"""class IncrementalDataPullStream(DataPullStream, ABC):
     """
     TODO fill in details of this class to implement functionality related to incremental syncs for your connector.
          if you do not need to implement incremental sync for any streams, remove this class.
@@ -136,9 +136,9 @@ class IncrementalDataPullStream(DataPullStream, ABC):
         Override to determine the latest state after reading the latest record. This typically compared the cursor_field from the latest record and
         the current state and picks the 'most' recent cursor. This is how a stream's state is determined. Required for incremental.
         """
-        return {}
+        return {} """
 
-
+"""
 class Employees(IncrementalDataPullStream):
     """
     TODO: Change class name to match the table/data source this stream corresponds to.
@@ -178,6 +178,7 @@ class Employees(IncrementalDataPullStream):
         the date query param.
         """
         raise NotImplementedError("Implement stream slices or delete this method!")
+        """
 
 
 # Source
@@ -198,8 +199,8 @@ class SourceDataPull(AbstractSource):
         :param config: A Mapping of the user input configuration as defined in the connector spec.
         """
         # TODO remove the authenticator if not required.
-        auth = TokenAuthenticator(token="api_key")  # Oauth2Authenticator is also available if you need oauth support
-        return [Customers(authenticator=auth), Employees(authenticator=auth)]
+        auth = NoAuth()   # Oauth2Authenticator is also available if you need oauth support
+        return [exchange_rates(authenticator=auth)]
         
 class ExchangeRates(HttpStream):
     url_base = "https://api.apilayer.com/exchangerates_data/"
