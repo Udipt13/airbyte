@@ -183,17 +183,13 @@ class Employees(IncrementalDataPullStream):
 # Source
 class SourceDataPull(AbstractSource):
     def check_connection(self, logger, config) -> Tuple[bool, any]:
-        """
-        TODO: Implement a connection check to validate that the user-provided config can be used to connect to the underlying API
-
-        See https://github.com/airbytehq/airbyte/blob/master/airbyte-integrations/connectors/source-stripe/source_stripe/source.py#L232
-        for an example.
-
-        :param config:  the user-input config object conforming to the connector's spec.yaml
-        :param logger:  logger object
-        :return Tuple[bool, any]: (True, None) if the input config can be used to connect to the API successfully, (False, error) otherwise.
-        """
-        return True, None
+        
+        accepted_currencies = {"USD", "JPY", "BGN", "CZK", "DKK"}  # assume these are the only allowed currencies
+        input_currency = config['base']
+        if input_currency not in accepted_currencies:
+            return False, f"Input currency {input_currency} is invalid. Please input one of the following currencies: {accepted_currencies}"
+        else:
+            return True, None
 
     def streams(self, config: Mapping[str, Any]) -> List[Stream]:
         """
