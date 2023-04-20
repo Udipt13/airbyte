@@ -1,6 +1,17 @@
+#
+# Copyright (c) 2023 Airbyte, Inc., all rights reserved.
+#
+
+
+from abc import ABC
+from typing import Any, Iterable, List, Mapping, MutableMapping, Optional, Tuple
 from airbyte_cdk.sources.streams.http.auth import NoAuth
-
-
+import requests
+from airbyte_cdk.sources import AbstractSource
+from airbyte_cdk.sources.streams import Stream
+from airbyte_cdk.sources.streams.http import HttpStream
+from airbyte_cdk.sources.streams.http.auth import TokenAuthenticator
+from airbyte_cdk.sources.streams.http.auth import NoAuth
 
 class ExchangeRates(HttpStream):
     url_base = "https://api.apilayer.com/exchangerates_data/"
@@ -28,6 +39,8 @@ class ExchangeRates(HttpStream):
         next_page_token: Mapping[str, Any] = None,
     ) -> Iterable[Mapping]:
         return None  # TODO
+
+
 
 class SourcePythonHttpTutorial(AbstractSource):
 
