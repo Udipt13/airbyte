@@ -287,14 +287,14 @@ class ExchangeRates(HttpStream): # same name as given in schema
         # The API does not offer pagination, so we return None to indicate there are no more pages in the response
         return None
 
-    # def path(
-    #     self, 
-    #     stream_state: Mapping[str, Any] = None, 
-    #     stream_slice: Mapping[str, Any] = None, 
-    #     next_page_token: Mapping[str, Any] = None
-    # ) -> str:
-    #     # The "/latest" path gives us the latest currency exchange rates
-    #     return "latest" 
+    def path(
+        self, 
+        stream_state: Mapping[str, Any] = None, 
+        stream_slice: Mapping[str, Any] = None, 
+        next_page_token: Mapping[str, Any] = None
+    ) -> str:
+        # The "/latest" path gives us the latest currency exchange rates
+        return "latest" 
 
     def request_headers(
         self, stream_state: Mapping[str, Any], stream_slice: Mapping[str, Any] = None, next_page_token: Mapping[str, Any] = None
