@@ -319,7 +319,7 @@ class ExchangeRates(HttpStream): # same name as given in schema
             stream_slice: Mapping[str, Any] = None,
             next_page_token: Mapping[str, Any] = None,
     ) -> Iterable[Mapping]:
-        print(resonse)
+        print(response)
         return [json.dumps(response.__dict__)]
         # The response is a simple JSON whose schema matches our stream's schema exactly, 
         # so we just return a list containing the response
