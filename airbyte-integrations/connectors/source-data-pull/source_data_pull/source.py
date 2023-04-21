@@ -314,13 +314,20 @@ class ExchangeRates(HttpStream): # same name as given in schema
     def parse_response(
             self,
             response: requests.Response,
+            decoded_content:response.content.decode('utf-8'),
+            csvreader:csv.reader(decoded_content.splitlines(), delimiter=',')
             stream_state: Mapping[str, Any],
             stream_slice: Mapping[str, Any] = None,
             next_page_token: Mapping[str, Any] = None,
     ) -> Iterable[Mapping]:
         # The response is a simple JSON whose schema matches our stream's schema exactly, 
         # so we just return a list containing the response
-        return [response.json()]
+        decoded_content=response.content.decode('utf-8'),
+        csvreader=csv.reader(decoded_content.splitlines(), delimiter=',')
+        data = []
+        for row in csvreader:
+            data.append(row)
+        return [data.json()]
     
     def streams(self, config: Mapping[str, Any]) -> List[Stream]:
         auth = NoAuth()
