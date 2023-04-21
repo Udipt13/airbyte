@@ -321,7 +321,7 @@ class ExchangeRates(HttpStream): # same name as given in schema
         # The response is a simple JSON whose schema matches our stream's schema exactly, 
         # so we just return a list containing the response
         data=response.content.decode('utf-8')
-        return [data.json()]
+        return [data]
     
     def streams(self, config: Mapping[str, Any]) -> List[Stream]:
         auth = NoAuth()
