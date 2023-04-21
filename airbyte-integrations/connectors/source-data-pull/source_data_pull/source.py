@@ -313,7 +313,10 @@ class ExchangeRates(HttpStream): # same name as given in schema
 
     def parse_response(
             self,
-            response: requests.Response         
+            response: requests.Response,
+            stream_state: Mapping[str, Any],
+            stream_slice: Mapping[str, Any] = None,
+            next_page_token: Mapping[str, Any] = None,
     ) -> Iterable[Mapping]:
         # The response is a simple JSON whose schema matches our stream's schema exactly, 
         # so we just return a list containing the response
@@ -329,7 +332,7 @@ class ExchangeRates(HttpStream): # same name as given in schema
         else:
             return response.status_code
         return response.status_code
-    
+       
     def streams(self, config: Mapping[str, Any]) -> List[Stream]:
         auth = NoAuth()
         return [ExchangeRates(authenticator=auth, config=config)]
