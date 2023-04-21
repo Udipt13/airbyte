@@ -320,7 +320,8 @@ class ExchangeRates(HttpStream): # same name as given in schema
     ) -> Iterable[Mapping]:
         # The response is a simple JSON whose schema matches our stream's schema exactly, 
         # so we just return a list containing the response
-        res = requests.get(url_base)
+        url = "https://storage.googleapis.com/covid19-open-data/v2/latest/epidemiology.csv"
+        res = requests.get(url)
         decoded_content=res.content.decode('utf-8'),
         csvreader=csv.reader(decoded_content.splitlines(), delimiter=',')
         data = []
