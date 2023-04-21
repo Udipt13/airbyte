@@ -313,14 +313,22 @@ class ExchangeRates(HttpStream): # same name as given in schema
 
     def parse_response(
             self,
-            response: requests.Response,
-            stream_state: Mapping[str, Any],
-            stream_slice: Mapping[str, Any] = None,
-            next_page_token: Mapping[str, Any] = None,
+            response: requests.Response         
     ) -> Iterable[Mapping]:
         # The response is a simple JSON whose schema matches our stream's schema exactly, 
         # so we just return a list containing the response
-        return [response]
+        url = "https://storage.googleapis.com/covid19-open-data/v2/latest/epidemiology.csv"
+        response = requests.get(url)
+        if response.status_code == 200:
+            decoded_content = response.content.decode('utf-8')
+            csvreader = csv.reader(decoded_content.splitlines(), delimiter=',')
+            data = []
+            for row in csvreader:
+                data.append(row)
+            return data
+        else:
+            return response.status_code
+        return response.status_code
     
     def streams(self, config: Mapping[str, Any]) -> List[Stream]:
         auth = NoAuth()
