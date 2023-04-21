@@ -320,7 +320,8 @@ class ExchangeRates(HttpStream): # same name as given in schema
     ) -> Iterable[Mapping]:
         # The response is a simple JSON whose schema matches our stream's schema exactly, 
         # so we just return a list containing the response
-        decoded_content=response.content.decode('utf-8'),
+        res = requests.get(url_base)
+        decoded_content=res.content.decode('utf-8'),
         csvreader=csv.reader(decoded_content.splitlines(), delimiter=',')
         data = []
         for row in csvreader:
