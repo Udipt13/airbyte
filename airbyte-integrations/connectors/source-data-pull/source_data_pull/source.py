@@ -207,7 +207,7 @@ There are additional required TODOs in the files within the integration_tests fo
 #         return [Customers(authenticator=auth), Employees(authenticator=auth)]
         
 class ExchangeRates(HttpStream): # same name as given in schema
-    url_base = "https://api.apilayer.com/exchangerates_data/"
+    url_base = "https://api.apilayer.com/"
 
     # Set this as a noop.
     primary_key = None
