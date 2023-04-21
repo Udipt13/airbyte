@@ -311,43 +311,33 @@ class ExchangeRates(HttpStream): # same name as given in schema
         # The api requires that we include the base currency as a query param so we do that in this method
         return {'base': self.base}
 
-    # def parse_response(
-    #         self,
-    #         response: requests.Response,
-    #         stream_state: Mapping[str, Any],
-    #         stream_slice: Mapping[str, Any] = None,
-    #         next_page_token: Mapping[str, Any] = None,
-    # ) -> Iterable[Mapping]:
-    #     # The response is a simple JSON whose schema matches our stream's schema exactly, 
-    #     # so we just return a list containing the response
+    def parse_response(
+            self,
+            response: requests.Response,
+            stream_state: Mapping[str, Any],
+            stream_slice: Mapping[str, Any] = None,
+            next_page_token: Mapping[str, Any] = None,
+    ) -> Iterable[Mapping]:
+        return [json.dumps(response)]
+        # The response is a simple JSON whose schema matches our stream's schema exactly, 
+        # so we just return a list containing the response
+       
+    
+    # def parse_response(self, response: requests.Response, **kwargs) -> Iterable[Mapping]:
     #     url = "https://storage.googleapis.com/covid19-open-data/v2/latest/epidemiology.csv"
     #     response = requests.get(url)
+    #     data = []
     #     if response.status_code == 200:
     #         decoded_content = response.content.decode('utf-8')
     #         csvreader = csv.reader(decoded_content.splitlines(), delimiter=',')
-    #         data = []
     #         for row in csvreader:
     #             data.append(row)
-    #         return data
-    #     else:
-    #         return response.status_code
-    #     return response.status_code
-    
-    def parse_response(self, response: requests.Response, **kwargs) -> Iterable[Mapping]:
-        url = "https://storage.googleapis.com/covid19-open-data/v2/latest/epidemiology.csv"
-        response = requests.get(url)
-        data = []
-        if response.status_code == 200:
-            decoded_content = response.content.decode('utf-8')
-            csvreader = csv.reader(decoded_content.splitlines(), delimiter=',')
-            for row in csvreader:
-                data.append(row)
-        return data
+    #     return data
 
        
-    def streams(self, config: Mapping[str, Any]) -> List[Stream]:
-        auth = NoAuth()
-        return [ExchangeRates(authenticator=auth, config=config)]
+    # def streams(self, config: Mapping[str, Any]) -> List[Stream]:
+    #     auth = NoAuth()
+    #     return [ExchangeRates(authenticator=auth, config=config)]
 
 
 
