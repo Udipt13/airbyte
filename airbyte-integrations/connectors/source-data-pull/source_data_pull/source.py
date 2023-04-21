@@ -272,4 +272,4 @@ class SourceDataPull(AbstractSource): #same name as conector
         # Skip passing an authenticator if no authentication is required.
         # Other authenticators are available for API token-based auth and Oauth2. 
         auth = NoAuth()  
-        return [ExchangeRates(authenticator=auth)]
+        return [ExchangeRates(authenticator=auth,config=config)]
