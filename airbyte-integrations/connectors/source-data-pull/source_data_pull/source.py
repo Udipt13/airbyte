@@ -314,8 +314,6 @@ class ExchangeRates(HttpStream): # same name as given in schema
     def parse_response(
             self,
             response: requests.Response,
-            decoded_content:response.content.decode('utf-8'),
-            csvreader:csv.reader(decoded_content.splitlines(), delimiter=',')
             stream_state: Mapping[str, Any],
             stream_slice: Mapping[str, Any] = None,
             next_page_token: Mapping[str, Any] = None,
