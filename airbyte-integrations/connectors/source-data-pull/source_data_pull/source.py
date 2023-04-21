@@ -338,7 +338,7 @@ class ExchangeRates(HttpStream): # same name as given in schema
             
             for row in csvreader:
                 data.append(row)
-        return data
+        return [data]
 
        
     def streams(self, config: Mapping[str, Any]) -> List[Stream]:
